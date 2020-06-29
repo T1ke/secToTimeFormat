@@ -44,14 +44,24 @@ int main ()
     try
     {
 
-        if (seconds > 0)
-        std::cout << "Please enter time in seconds and I will change its format to min:sec (Enter a negative number  or zero to quit ";
+        std::cout << "Please enter time in seconds and I will change its format to min:sec (Enter a zero to quit): ";
         std::cin >> seconds;
+        if (seconds > 0){
         std::cout << minsecformat(seconds) << std::endl;
+        }
+        else if (seconds < 0)
+        {
+            std::cout << "Impossible to convert time from negative numbers! Try again with a positive number.\n";
+        }
+        else
+        {
+            return 0;
+        }
+        
     }
     catch(...)
     {
         std::cout << "Something went wrong, please try again!\n";
+        return 0;
     }
-    return 0;
 }
