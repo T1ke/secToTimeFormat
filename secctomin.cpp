@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cctype>
 
 std::string minsecformat(int seconds)
 {
@@ -9,6 +10,7 @@ std::string minsecformat(int seconds)
     min = min % 60;
     sec = seconds % 60;
     std::string shour, smin, ssec;
+
     if (hour < 10)
     {
         shour = "0" + std::to_string(hour);
@@ -35,33 +37,44 @@ std::string minsecformat(int seconds)
     }
     
     return shour + ":" + smin + ":" + ssec;
-
 }
 
 int main ()
 {
-    int seconds = 1;
-    try
-    {
+    std::string second;
+    bool go = true;
+        while (go)
+        {
+            try
+            {
+            std::cout << "Please enter time in seconds and I will change its format to min:sec (Enter a 0 (zero) to quit): ";
+            std::cin >> second;
 
-        std::cout << "Please enter time in seconds and I will change its format to min:sec (Enter a zero to quit): ";
-        std::cin >> seconds;
-        if (seconds > 0){
-        std::cout << minsecformat(seconds) << std::endl;
+            int seconds = std::stoi(second); // need to convert from string to int, doesnt work with straight int
+            if (seconds > 0)
+            {
+                std::cout << minsecformat(seconds) << std::endl;
+            } 
+            else if (seconds < 0)
+            {
+                std::cout << "Impossible to convert time from negative numbers! Try again with a positive number.\n";
+            }
+            else if (seconds == 0)
+            {
+                go = false;
+            }            
+            else
+            {
+                std::cout << "Try again with different parameters!" << std::endl;  
+            }
+
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << "\n" << e.what() << '\n';
+                std::cout << "There was a problem, please try again!\n";    
+            }
         }
-        else if (seconds < 0)
-        {
-            std::cout << "Impossible to convert time from negative numbers! Try again with a positive number.\n";
-        }
-        else
-        {
-            return 0;
-        }
-        
-    }
-    catch(...)
-    {
-        std::cout << "Something went wrong, please try again!\n";
-        return 0;
-    }
+    return 0;
 }
+
